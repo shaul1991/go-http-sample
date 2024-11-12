@@ -18,6 +18,10 @@ func MySQLHandler(w http.ResponseWriter, r *http.Request) {
 	systemController.MySQLHealthCheck(w, r)
 }
 
+func DashboardHandler(w http.ResponseWriter, r *http.Request) {
+	systemController.DashboardHandler(w, r)
+}
+
 func RootHandler(w http.ResponseWriter, r *http.Request) {
 	mainController.MainResponse(w, r)
 }

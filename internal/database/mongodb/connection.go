@@ -69,4 +69,14 @@ func Disconnect() error {
 
 	log.Println("Disconnected from MongoDB")
 	return nil
+}
+
+// GetMinPoolSize returns the minimum pool size
+func GetMinPoolSize() uint64 {
+	return minPoolSize
+}
+
+// GetMaxPoolSize returns the maximum pool size
+func GetMaxPoolSize() uint64 {
+	return maxPoolSize
 } 

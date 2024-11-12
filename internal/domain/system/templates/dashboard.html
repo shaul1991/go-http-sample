@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Database Status Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .status-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status-success {
+            border-left: 4px solid #28a745;
+        }
+        .status-error {
+            border-left: 4px solid #dc3545;
+        }
+        .timestamp {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #444;
+            margin-top: 0;
+        }
+        .refresh-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .refresh-btn:hover {
+            background-color: #0056b3;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .stat-label {
+            font-weight: bold;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .stat-value {
+            color: #333;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Database Status Dashboard</h1>
+        <button class="refresh-btn" onclick="window.location.reload()">Refresh Status</button>
+        {{range .Databases}}
+        <div class="status-card {{if eq .Status "success"}}status-success{{else}}status-error{{end}}">
+            <h2>{{.Name}}</h2>
+            <p><strong>Status:</strong> {{.Status}}</p>
+            <p><strong>Message:</strong> {{.Message}}</p>
+            
+            {{if .Stats}}
+            <h3>Database Stats</h3>
+            <div class="stats-grid">
+                {{range $key, $value := .Stats}}
+                <div class="stat-item">
+                    <div class="stat-label">{{$key}}</div>
+                    <div class="stat-value">{{$value}}</div>
+                </div>
+                {{end}}
+            </div>
+            {{end}}
+
+            {{if .PoolStats}}
+            <h3>Connection Pool Stats</h3>
+            <div class="stats-grid">
+                {{range $key, $value := .PoolStats}}
+                <div class="stat-item">
+                    <div class="stat-label">{{$key}}</div>
+                    <div class="stat-value">{{$value}}</div>
+                </div>
+                {{end}}
+            </div>
+            {{end}}
+        </div>
+        {{end}}
+        <p class="timestamp">Last Updated: {{.Timestamp}}</p>
+    </div>
+</body>
+</html> 
