@@ -10,6 +10,10 @@ func HealthHandler(w http.ResponseWriter, r *http.Request) {
 	systemController.HealthCheck(w, r)
 }
 
+func MongoDBHandler(w http.ResponseWriter, r *http.Request) {
+	systemController.MongoDBHealthCheck(w, r)
+}
+
 func RootHandler(w http.ResponseWriter, r *http.Request) {
 	mainController.MainResponse(w, r)
 }

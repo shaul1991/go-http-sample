@@ -17,6 +17,7 @@ func SetupRoutes() http.Handler {
 // setupSystemRoutes configures system-related routes like health check
 func setupSystemRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/health", HealthHandler)
+	mux.HandleFunc("/check/mongodb", MongoDBHandler)
 }
 
 // setupDefaultRoutes configures default routes
