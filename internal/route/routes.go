@@ -14,6 +14,10 @@ func MongoDBHandler(w http.ResponseWriter, r *http.Request) {
 	systemController.MongoDBHealthCheck(w, r)
 }
 
+func MySQLHandler(w http.ResponseWriter, r *http.Request) {
+	systemController.MySQLHealthCheck(w, r)
+}
+
 func RootHandler(w http.ResponseWriter, r *http.Request) {
 	mainController.MainResponse(w, r)
 }

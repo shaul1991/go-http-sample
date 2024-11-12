@@ -8,6 +8,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"go-http/internal/database/mongodb"
+	"go-http/internal/database/mysql"
 	"go-http/internal/route"
 )
 
@@ -32,6 +33,18 @@ func main() {
 		log.Fatalf("Failed to connect to MongoDB: %v", err)
 	}
 	defer mongodb.Disconnect()
+
+	mysqlUser := os.Getenv("MYSQL_USER")
+	mysqlPassword := os.Getenv("MYSQL_PASSWORD")
+	mysqlHost := os.Getenv("MYSQL_HOST")
+	mysqlPort := os.Getenv("MYSQL_PORT")
+	mysqlDatabase := os.Getenv("MYSQL_DATABASE")
+
+	err = mysql.Connect(mysqlUser, mysqlPassword, mysqlHost, mysqlPort, mysqlDatabase)
+	if err != nil {
+		log.Fatalf("Failed to connect to MySQL: %v", err)
+	}
+	defer mysql.Disconnect()
 
 	port := os.Getenv("PORT")
 	if port == "" {
