@@ -3,13 +3,14 @@ package controller
 import (
 	"context"
 	"encoding/json"
+	"go-http/core/database/mongodb"
+	"go-http/core/database/mysql"
 	"html/template"
 	"net/http"
 	"path/filepath"
 	"time"
+
 	"go.mongodb.org/mongo-driver/bson"
-	"go-http/internal/database/mongodb" 
-	"go-http/internal/database/mysql"
 )
 
 type DatabaseStatus struct {
@@ -46,8 +47,8 @@ func handleHTMLResponse(w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "text/html")
 
 	// 템플릿 파일 경로
-	tmplPath := filepath.Join("internal", "domain", "system", "templates", "dashboard.html")
-	
+	tmplPath := filepath.Join("presentation", "views", "system", "dashboard.html")
+
 	t, err := template.ParseFiles(tmplPath)
 	if err != nil {
 		http.Error(w, "Template error: "+err.Error(), http.StatusInternalServerError)
@@ -71,7 +72,7 @@ func checkDatabaseStatuses() []DatabaseStatus {
 	// Check MongoDB
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	
+
 	mongoStatus := DatabaseStatus{
 		Name:      "MongoDB",
 		Stats:     make(map[string]interface{}),
@@ -126,7 +127,7 @@ func checkDatabaseStatuses() []DatabaseStatus {
 		rows, err := db.Query("SHOW GLOBAL STATUS WHERE Variable_name IN ('Threads_connected', 'Max_used_connections', 'Threads_running', 'Bytes_received', 'Bytes_sent')")
 		if err == nil {
 			defer rows.Close()
-			
+
 			for rows.Next() {
 				var name string
 				var value string
@@ -157,4 +158,4 @@ func checkDatabaseStatuses() []DatabaseStatus {
 	statuses = append(statuses, mysqlStatus)
 
 	return statuses
-} 
+}

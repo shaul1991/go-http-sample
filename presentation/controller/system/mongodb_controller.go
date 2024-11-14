@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"go-http/internal/database/mongodb"
+	"go-http/core/database/mongodb"
 )
 
 func MongoDBHealthCheck(w http.ResponseWriter, r *http.Request) {

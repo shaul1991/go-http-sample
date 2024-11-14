@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"go-http/internal/database/mysql"
+	"go-http/core/database/mysql"
 )
 
 func MySQLHealthCheck(w http.ResponseWriter, r *http.Request) {
@@ -23,4 +23,4 @@ func MySQLHealthCheck(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode(response)
-} 
+}
